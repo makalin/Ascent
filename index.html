@@ -14,17 +14,17 @@
         <header>
             <div class="logo">
                 <h1>ASCENT</h1>
-                <span class="version">v1.0.0-web</span>
+                <span class="version">v1.1.0-web</span>
             </div>
             <div class="transport">
-                <button id="load-btn" class="glass-btn primary">LOAD AUDIO</button>
+                <button id="load-btn" class="glass-btn primary" type="button">LOAD AUDIO</button>
                 <input type="file" id="audio-input" accept="audio/*" hidden>
                 <div class="divider"></div>
-                <button id="play-btn" class="icon-btn" title="Play Engine">
-                    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+                <button id="play-btn" class="icon-btn" type="button" title="Play / Stop (Space)">
+                    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
                 </button>
-                <button id="rec-btn" class="icon-btn rec" title="Record Output">
-                    <svg viewBox="0 0 24 24" width="24" height="24"><circle cx="12" cy="12" r="8" fill="currentColor"/></svg>
+                <button id="rec-btn" class="icon-btn rec" type="button" title="Record (R)">
+                    <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="currentColor"/></svg>
                 </button>
                 <div id="status-indicator" class="idle"></div>
             </div>
@@ -32,38 +32,39 @@
 
         <main>
             <div id="explorer-container" class="glass-panel">
-                <canvas id="topo-canvas"></canvas>
+                <canvas id="topo-canvas" aria-label="Topographic corpus map"></canvas>
                 <div id="explorer-pin">
                     <div class="pin-inner"></div>
                     <div class="pin-ring"></div>
                 </div>
                 <div id="loading-overlay" class="hidden">
                     <div class="loader"></div>
-                    <p>ANALYZING CORPUS...</p>
+                    <p>ANALYZING CORPUS…</p>
                 </div>
             </div>
 
             <aside id="controls" class="glass-panel">
-                <div class="tabs">
-                    <button class="tab-link active" data-tab="tab-engine">ENGINE</button>
-                    <button class="tab-link" data-tab="tab-fx">FX / PRO</button>
+                <div class="tabs" role="tablist">
+                    <button type="button" class="tab-link active" data-tab="tab-engine" role="tab" aria-selected="true">ENGINE</button>
+                    <button type="button" class="tab-link" data-tab="tab-fx" role="tab" aria-selected="false">FX / PRO</button>
+                    <button type="button" class="tab-link" data-tab="tab-settings" role="tab" aria-selected="false">TOOLS</button>
                 </div>
 
-                <div id="tab-engine" class="tab-content active">
+                <div id="tab-engine" class="tab-content active" role="tabpanel">
                     <section class="control-group">
                         <h3>GRAIN ENGINE</h3>
                         <div class="control">
-                            <label>RATE (Hz)</label>
+                            <label for="grain-rate">RATE (Hz)</label>
                             <input type="range" id="grain-rate" min="1" max="100" value="20">
-                            <span class="value">20Hz</span>
+                            <span class="value">20 Hz</span>
                         </div>
                         <div class="control">
-                            <label>SIZE (ms)</label>
+                            <label for="grain-size">SIZE (ms)</label>
                             <input type="range" id="grain-size" min="10" max="500" value="100">
-                            <span class="value">100ms</span>
+                            <span class="value">100 ms</span>
                         </div>
                         <div class="control">
-                            <label>RADIUS</label>
+                            <label for="grain-radius">RADIUS</label>
                             <input type="range" id="grain-radius" min="0" max="1" step="0.01" value="0.2">
                             <span class="value">0.2</span>
                         </div>
@@ -72,39 +73,94 @@
                     <section class="control-group">
                         <h3>SPATIAL</h3>
                         <div class="control">
-                            <label>SPREAD</label>
+                            <label for="grain-spread">SPREAD</label>
                             <input type="range" id="grain-spread" min="0" max="1" step="0.01" value="0.5">
                             <span class="value">0.5</span>
                         </div>
                         <div class="control">
-                            <label>JITTER</label>
+                            <label for="grain-jitter">JITTER</label>
                             <input type="range" id="grain-jitter" min="0" max="1" step="0.01" value="0.1">
                             <span class="value">0.1</span>
                         </div>
                     </section>
                 </div>
 
-                <div id="tab-fx" class="tab-content">
+                <div id="tab-fx" class="tab-content" role="tabpanel">
                     <section class="control-group">
-                        <h3>EFFECTS</h3>
+                        <h3>MASTER &amp; FX</h3>
                         <div class="control">
-                            <label>REVERB MIX</label>
+                            <label for="master-gain">OUTPUT LEVEL</label>
+                            <input type="range" id="master-gain" min="0" max="1" step="0.01" value="0.8">
+                            <span class="value">0.8</span>
+                        </div>
+                        <div class="control">
+                            <label for="fx-reverb">REVERB MIX</label>
                             <input type="range" id="fx-reverb" min="0" max="1" step="0.01" value="0.3">
                             <span class="value">0.3</span>
                         </div>
                         <div class="control">
-                            <label>DELAY FEEDBACK</label>
+                            <label for="fx-delay">DELAY FEEDBACK</label>
                             <input type="range" id="fx-delay" min="0" max="0.9" step="0.01" value="0.4">
                             <span class="value">0.4</span>
+                        </div>
+                        <div class="control">
+                            <label for="fx-delay-time">DELAY TIME (s)</label>
+                            <input type="range" id="fx-delay-time" min="0.05" max="1.5" step="0.01" value="0.25">
+                            <span class="value">0.25 s</span>
                         </div>
                     </section>
 
                     <section class="control-group">
                         <h3>ENVELOPE</h3>
                         <div class="envelope-select">
-                            <button class="env-btn active" data-env="gaussian">GAUSS</button>
-                            <button class="env-btn" data-env="triangle">TRI</button>
-                            <button class="env-btn" data-env="exp">EXP</button>
+                            <button type="button" class="env-btn active" data-env="gaussian">GAUSS</button>
+                            <button type="button" class="env-btn" data-env="triangle">TRI</button>
+                            <button type="button" class="env-btn" data-env="exp">EXP</button>
+                        </div>
+                    </section>
+                </div>
+
+                <div id="tab-settings" class="tab-content" role="tabpanel">
+                    <section class="control-group">
+                        <h3>PRESETS</h3>
+                        <div class="control">
+                            <label for="preset-select">FACTORY</label>
+                            <select id="preset-select" class="select-input">
+                                <option value="">— choose —</option>
+                                <option value="default">Default</option>
+                                <option value="airy">Airy cloud</option>
+                                <option value="tight">Tight point</option>
+                                <option value="dub">Dub space</option>
+                            </select>
+                        </div>
+                        <div class="btn-row">
+                            <button type="button" id="export-preset-btn" class="glass-btn small">EXPORT JSON</button>
+                            <button type="button" id="import-preset-btn" class="glass-btn small">IMPORT…</button>
+                            <input type="file" id="import-preset-input" accept="application/json,.json" hidden>
+                        </div>
+                    </section>
+                    <section class="control-group">
+                        <h3>MAP</h3>
+                        <button type="button" id="regen-terrain-btn" class="glass-btn full">REGENERATE TERRAIN</button>
+                        <p class="hint">Reseeds contour noise (visual only).</p>
+                    </section>
+                    <section class="control-group">
+                        <h3>ACCESSIBILITY</h3>
+                        <label class="check-row">
+                            <input type="checkbox" id="opt-reduced-motion">
+                            <span>Reduce motion (pulse ring)</span>
+                        </label>
+                    </section>
+                    <section class="control-group">
+                        <h3>KEYBOARD</h3>
+                        <button type="button" id="toggle-shortcuts" class="glass-btn full">SHOW / HIDE SHORTCUTS</button>
+                        <div id="shortcuts-panel" class="shortcuts hidden">
+                            <ul>
+                                <li><kbd>Space</kbd> Play / stop engine</li>
+                                <li><kbd>R</kbd> Toggle record</li>
+                                <li><kbd>L</kbd> Load audio</li>
+                                <li><kbd>?</kbd> This panel</li>
+                            </ul>
                         </div>
                     </section>
                 </div>
@@ -112,13 +168,14 @@
                 <section class="control-group mode-section">
                     <h3>PLAYBACK MODE</h3>
                     <div class="mode-toggle">
-                        <button id="mode-point" class="active">POINT</button>
-                        <button id="mode-cloud">CLOUD</button>
+                        <button type="button" id="mode-point" class="active">POINT</button>
+                        <button type="button" id="mode-cloud">CLOUD</button>
                     </div>
+                    <p class="hint mode-hint">Point: one grain per tick. Cloud: a burst around the pin using radius.</p>
                 </section>
 
                 <div class="visualizer-mini">
-                    <canvas id="waveform-canvas"></canvas>
+                    <canvas id="waveform-canvas" aria-hidden="true"></canvas>
                     <div id="grain-marker"></div>
                 </div>
             </aside>
@@ -127,11 +184,11 @@
         <footer>
             <div class="stats">
                 <span>GRAINS: <span id="grain-count">0</span></span>
-                <span>LATENCY: <span id="latency-val">~5ms</span></span>
+                <span>ENGINE: <span id="latency-val">Web Audio</span></span>
                 <span id="rec-status" class="hidden">● RECORDING <span id="rec-time">00:00</span></span>
             </div>
             <div class="credits">
-                Istanbul 2026 // Ascent Project
+                Istanbul 2026 · Ascent · <code>AscentAPI</code> on <code>window</code>
             </div>
         </footer>
     </div>

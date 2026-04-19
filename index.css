@@ -86,7 +86,7 @@ header {
 /* Panels */
 main {
     display: grid;
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: 1fr minmax(300px, 360px);
     gap: 15px;
 }
 
@@ -423,6 +423,115 @@ input[type=range]:active::-webkit-slider-thumb {
     margin-top: auto;
     padding-top: 20px;
     border-top: 1px solid var(--glass-border);
+}
+
+.mode-hint {
+    margin-top: 10px;
+}
+
+.hint {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    margin-top: 8px;
+    font-family: var(--font-mono);
+}
+
+.select-input {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--glass-border);
+    background: rgba(0, 0, 0, 0.35);
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.select-input:focus {
+    outline: none;
+    border-color: var(--accent-cyan);
+}
+
+.btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.glass-btn.small {
+    padding: 8px 12px;
+    font-size: 0.7rem;
+    flex: 1;
+    min-width: 0;
+}
+
+.glass-btn.full {
+    width: 100%;
+}
+
+.check-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-family: var(--font-mono);
+}
+
+.check-row input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--accent-cyan);
+}
+
+.shortcuts {
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid var(--glass-border);
+}
+
+.shortcuts ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.shortcuts li {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+kbd {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.06);
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--accent-cyan);
+}
+
+body.reduced-motion .pin-ring {
+    animation: none;
+    opacity: 0.25;
+}
+
+footer code {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    color: var(--text-secondary);
 }
 
 /* Waveform Marker */
